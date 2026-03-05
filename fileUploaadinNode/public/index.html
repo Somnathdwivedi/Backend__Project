@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .card{
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      border:1px solid;
+    }
+  </style>
+</head>
+<body>
+  <h1>My Page</h1>
+  <button onclick="loadData()">Fetch Data form server</button>
+  <div id="mydiv">
+    
+
+  </div>
+</body>
+   <script>
+    function loadData() {
+      console.log("working");
+      const mCard = document.querySelector('#mydiv');
+      let mData = fetch("http://localhost:8080/api/v1/upload/getData")
+      .then(data => data.json())
+      .then(value => {
+        console.log(value)
+        value.forEach(item => {
+        // Append each item to the card
+        // const p = document.createElement('p');
+        mCard.innerHTML += `
+          <div class="card">
+            Name: ${item.name}
+            Tag: ${item.tags}
+            email:${item.email ?? "not email"}
+
+
+          </div>`;
+        // mCard.appendChild(p);
+      });
+
+      })
+      .catch(error => console.log(error))
+    }
+   </script>
+</html>
